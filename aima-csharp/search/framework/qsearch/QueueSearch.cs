@@ -18,9 +18,9 @@ namespace aima.core.search.framework.qsearch
      public abstract class QueueSearch
     {
         public const System.String METRIC_NODES_EXPANDED = "nodesExpanded";
-        public const System.String METRIC_QUEUE_SIZE = "queueSize";
-	public const System.String METRIC_MAX_QUEUE_SIZE = "maxQueueSize";
-	public const System.String METRIC_PATH_COST = "pathCost";
+        public const System.String METRIC_QUEUE_SIZE = "currentFrontierSize";
+	    public const System.String METRIC_MAX_QUEUE_SIZE = "maxFrontierSize";
+	    public const System.String METRIC_PATH_COST = "solutionPathCost";
 
         protected readonly NodeExpander nodeExpander;
         protected IQueue<Node> frontier;

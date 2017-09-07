@@ -66,7 +66,8 @@ namespace aima.core.search.framework
         public String toString()
         {
             SortedDictionary<String, String> map = new SortedDictionary<String, String>(hash);
-            return map.ToString();
+
+            return string.Join(Environment.NewLine, map);
         }
     }
 }
