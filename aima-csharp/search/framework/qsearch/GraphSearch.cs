@@ -37,7 +37,7 @@ namespace aima.core.search.framework.qsearch
      * @author Ciaran O'Reilly
      * @author Ruediger Lunde
      */
-    public class GraphSearch : QueueSearch
+    public abstract class GraphSearch : QueueSearch
     {
 	private HashSet<object> explored = new HashSet<object>();
 
@@ -55,7 +55,7 @@ namespace aima.core.search.framework.qsearch
 	 * Clears the set of explored states and calls the search implementation of
 	 * <code>QueSearch</code>
 	 */	
-	public override List<Action> search(Problem problem, Queue<Node> frontier)
+	protected override List<Action> search(Problem problem, IQueue<Node> frontier)
 	{
 	    // initialize the explored set to be empty
 	    explored.Clear();

@@ -23,7 +23,7 @@ namespace aima.core.search.framework.qsearch
 	public const System.String METRIC_PATH_COST = "pathCost";
 
         protected readonly NodeExpander nodeExpander;
-        protected Queue<Node> frontier;
+        protected IQueue<Node> frontier;
         protected bool earlyGoalCheck = false;
         protected Metrics metrics = new Metrics();
 
@@ -54,7 +54,7 @@ namespace aima.core.search.framework.qsearch
     	 *         containing a single NoOp Action if already at the goal, or an
     	 *         empty list if the goal could not be found.
     	 */
-         public virtual List<Action> search(Problem problem, Queue<Node> frontier)
+         protected virtual List<Action> search(Problem problem, IQueue<Node> frontier)
         {
             this.frontier = frontier;
             clearInstrumentation();

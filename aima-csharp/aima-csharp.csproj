@@ -117,8 +117,11 @@
     <Compile Include="search\framework\problem\Problem.cs" />
     <Compile Include="search\framework\problem\ResultFunction.cs" />
     <Compile Include="search\framework\problem\StepCostFunction.cs" />
+    <Compile Include="search\framework\qsearch\FIFOQueue.cs" />
     <Compile Include="search\framework\qsearch\GraphSearch.cs" />
     <Compile Include="search\framework\qsearch\GraphSearchBFS.cs" />
+    <Compile Include="search\framework\qsearch\IQueue.cs" />
+    <Compile Include="search\framework\qsearch\LIFOQueue.cs" />
     <Compile Include="search\framework\qsearch\QueueSearch.cs" />
     <Compile Include="search\framework\qsearch\TreeSearch.cs" />
     <Compile Include="search\framework\Search.cs" />
