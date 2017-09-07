@@ -28,7 +28,7 @@ namespace aima.core.search.framework
 	 */
          public Node createNode(System.Object state, Node parent, Action action, double stepCost)
         {
-            return new Node(state, parent, action, parent.getPathCost() + stepCost);
+            return new Node(state, parent, action, stepCost);
         }
 
         /**
