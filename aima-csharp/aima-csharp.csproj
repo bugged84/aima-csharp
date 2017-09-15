@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Priority Queue, Version=4.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OptimizedPriorityQueue.4.1.1\lib\net45\Priority Queue.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -72,6 +76,11 @@
     <Compile Include="agent\Model.cs" />
     <Compile Include="agent\Percept.cs" />
     <Compile Include="agent\State.cs" />
+    <Compile Include="search\framework\qsearch\BeamSearch.cs" />
+    <Compile Include="search\framework\qsearch\BranchAndBoundSearch.cs" />
+    <Compile Include="search\framework\qsearch\DepthFirstSearch.cs" />
+    <Compile Include="search\framework\qsearch\PriorityQueue.cs" />
+    <Compile Include="search\framework\qsearch\DepthLimitedSearch.cs" />
     <Compile Include="environment\cellworld\Cell.cs" />
     <Compile Include="environment\cellworld\CellWorld.cs" />
     <Compile Include="environment\cellworld\CellWorldAction.cs" />
@@ -117,8 +126,11 @@
     <Compile Include="search\framework\problem\Problem.cs" />
     <Compile Include="search\framework\problem\ResultFunction.cs" />
     <Compile Include="search\framework\problem\StepCostFunction.cs" />
+    <Compile Include="search\framework\qsearch\FIFOQueue.cs" />
     <Compile Include="search\framework\qsearch\GraphSearch.cs" />
     <Compile Include="search\framework\qsearch\GraphSearchBFS.cs" />
+    <Compile Include="search\framework\qsearch\IQueue.cs" />
+    <Compile Include="search\framework\qsearch\LIFOQueue.cs" />
     <Compile Include="search\framework\qsearch\QueueSearch.cs" />
     <Compile Include="search\framework\qsearch\TreeSearch.cs" />
     <Compile Include="search\framework\Search.cs" />
@@ -157,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="environment\wumpusworld\action\" />

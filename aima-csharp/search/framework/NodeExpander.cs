@@ -28,7 +28,7 @@ namespace aima.core.search.framework
 	 */
          public Node createNode(System.Object state, Node parent, Action action, double stepCost)
         {
-            return new Node(state, parent, action, parent.getPathCost() + stepCost);
+            return new Node(state, parent, action, stepCost);
         }
 
         /**
@@ -43,7 +43,7 @@ namespace aima.core.search.framework
     	 * @return the children obtained from expanding the specified node in the
     	 *         specified problem.
     	 */
-        public List<Node> expand(Node node, Problem problem)
+        public virtual List<Node> expand(Node node, Problem problem)
         {
             List<Node> successors = new List<Node>();
 

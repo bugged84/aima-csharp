@@ -153,5 +153,33 @@ namespace aima.core.search.framework
             return "[parent=" + parent + ", action=" + action + ", state="
                     + getState() + ", pathCost=" + pathCost + "]";
         }
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as Node;
+
+            if(other == null)
+            {
+                return false;
+            }
+
+            // one node per world state
+            return Equals(getState(), other.getState());
+        }
+
+        public static bool operator ==(Node a, Node b)
+        {
+            return Equals(a, b);
+        }
+
+        public static bool operator !=(Node a, Node b)
+        {
+            return !(a == b);
+        }
+
+        public override int GetHashCode()
+        {
+            return getState().GetHashCode();
+        }
     }
 }

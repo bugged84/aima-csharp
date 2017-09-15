@@ -3,6 +3,7 @@ using System.Threading;
 using aima.core.agent;
 using aima.core.util;
 using aima.core.search.framework.problem;
+using System.Linq;
 
 namespace aima.core.search.framework.qsearch
 {
@@ -17,13 +18,14 @@ namespace aima.core.search.framework.qsearch
      */
      public abstract class QueueSearch
     {
-        public const System.String METRIC_NODES_EXPANDED = "nodesExpanded";
-        public const System.String METRIC_QUEUE_SIZE = "queueSize";
-	public const System.String METRIC_MAX_QUEUE_SIZE = "maxQueueSize";
-	public const System.String METRIC_PATH_COST = "pathCost";
+        public const System.String METRIC_NODES_EXPANDED = "2_nodesExpanded";
+        public const System.String METRIC_QUEUE_SIZE = "5_currentFrontierSize";
+	    public const System.String METRIC_MAX_QUEUE_SIZE = "4_maxFrontierSize";
+	    public const System.String METRIC_PATH_COST = "7_solutionPathCost";        
+        public const System.String METRIC_OPEN_LIST = "6_frontier";
 
         protected readonly NodeExpander nodeExpander;
-        protected Queue<Node> frontier;
+        protected IQueue<Node> frontier;
         protected bool earlyGoalCheck = false;
         protected Metrics metrics = new Metrics();
 
@@ -54,7 +56,7 @@ namespace aima.core.search.framework.qsearch
     	 *         containing a single NoOp Action if already at the goal, or an
     	 *         empty list if the goal could not be found.
     	 */
-         public virtual List<Action> search(Problem problem, Queue<Node> frontier)
+         protected virtual List<Action> search(Problem problem, IQueue<Node> frontier)
         {
             this.frontier = frontier;
             clearInstrumentation();
@@ -68,7 +70,7 @@ namespace aima.core.search.framework.qsearch
                 }
             }
             addToFrontier(root);
-            while(!(frontier.Count == 0))
+            while(!(this.frontier.Count == 0))
             {
                 // choose a leaf node and remove it from the frontier
                 Node nodeToExpand = removeFromFrontier();
@@ -94,8 +96,9 @@ namespace aima.core.search.framework.qsearch
                             return getSolution(successor);
                         }
                     }
-                    addToFrontier(successor)
-;                }
+                    addToFrontier(successor);
+                }
+                OnNodeExpanded();
             }
             // if the frontier is empty then return failure
             return SearchUtils.failure();
@@ -104,6 +107,13 @@ namespace aima.core.search.framework.qsearch
 	 * Primitive operation which inserts the node at the tail of the frontier.
 	 */
         protected abstract void addToFrontier(Node node);
+
+        /// <summary>
+        ///     Notifies when all the successors of an expanded node have been added to the frontier.
+        /// </summary>
+        protected virtual void OnNodeExpanded()
+        {
+        }
 
         /**
 	 * Primitive operation which removes and returns the node at the head of the
@@ -163,6 +173,13 @@ namespace aima.core.search.framework.qsearch
 
         private List<Action> getSolution(Node node)
         {
+            var openList = new List<Node>();
+            while(frontier.Count != 0)
+            {
+                openList.Add(frontier.Dequeue());
+            }
+
+            metrics.set(METRIC_OPEN_LIST, openList.Any() ? "{ " + string.Join(", ", openList.Select(x => $"{x.getState():v}")) + " }" : "{ }");
             metrics.set(METRIC_PATH_COST, node.getPathCost());
             return SearchUtils.getSequenceOfActions(node);
         }

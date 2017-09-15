@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace aima.core.search.framework
 {
@@ -16,6 +17,11 @@ namespace aima.core.search.framework
         public Metrics()
         {
             this.hash = new Dictionary<String, String>();
+        }
+
+        public void set(String name, string value)
+        {
+            hash[name] = value;
         }
 
         public void set(String name, int i)
@@ -66,7 +72,8 @@ namespace aima.core.search.framework
         public String toString()
         {
             SortedDictionary<String, String> map = new SortedDictionary<String, String>(hash);
-            return map.ToString();
+
+            return string.Join(Environment.NewLine, map.ToDictionary(x => x.Key.Substring(2), x => x.Value));
         }
     }
 }

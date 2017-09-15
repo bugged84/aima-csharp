@@ -3,6 +3,7 @@ using System.Linq;
 using aima.core.agent;
 using aima.core.search.framework;
 using aima.core.search.framework.problem;
+using System.Diagnostics;
 
 namespace aima.core.search.framework.qsearch
 {
@@ -37,8 +38,10 @@ namespace aima.core.search.framework.qsearch
      * @author Ciaran O'Reilly
      * @author Ruediger Lunde
      */
-    public class GraphSearch : QueueSearch
+    public abstract class GraphSearch : QueueSearch
     {
+        public const System.String METRIC_CLOSED_LIST = "3_closedList";
+
 	private HashSet<object> explored = new HashSet<object>();
 
 	public GraphSearch() : this(new NodeExpander())
@@ -55,13 +58,25 @@ namespace aima.core.search.framework.qsearch
 	 * Clears the set of explored states and calls the search implementation of
 	 * <code>QueSearch</code>
 	 */	
-	public override List<Action> search(Problem problem, Queue<Node> frontier)
+	protected override List<Action> search(Problem problem, IQueue<Node> frontier)
 	{
-	    // initialize the explored set to be empty
-	    explored.Clear();
+        var sw = new Stopwatch();
+        sw.Start();
+
+        // initialize the explored set to be empty
+        explored.Clear();
 	    // expandedNodes = new List<Node>();
-	    return base.search(problem, frontier);
+	    var solution = base.search(problem, frontier);
+
+        sw.Stop();
+        metrics.set("1_executionTimeInMilliseconds", sw.ElapsedMilliseconds);
+
+        metrics.set(METRIC_CLOSED_LIST, "{ " + string.Join(", ", explored.Select(x => $"{x:v}")) + " }");
+       
+        return solution;
 	}
+
+    public abstract List<Action> Search(Problem problem);
 
 	/**
 	 * Inserts the node at the tail of the frontier if the corresponding state
@@ -69,7 +84,8 @@ namespace aima.core.search.framework.qsearch
 	 */
 	protected override void addToFrontier(Node node)
 	{
-	    if (!explored.Contains(node.getState()))
+        // Figure 3.7 (R&N): "adding the resulting nodes to the frontier only if not in the frontier or explored set"
+	    if (!explored.Contains(node.getState()) && !frontier.Contains(node))
 	    {
 		frontier.Enqueue(node);
 		updateMetrics(frontier.Count);

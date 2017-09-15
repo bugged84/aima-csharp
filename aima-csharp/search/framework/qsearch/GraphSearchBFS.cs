@@ -53,7 +53,7 @@ namespace aima.core.search.framework.qsearch
 	 * Clears the set of explored states and calls the search implementation of
 	 * <code>QueSearch</code>
 	 */
-	public override List<Action> search(Problem problem, Queue<Node> frontier)
+	public List<Action> search(Problem problem, FIFOQueue<Node> frontier)
 	{
 	    // Initialize the explored set to be empty
 	    explored.Clear();
