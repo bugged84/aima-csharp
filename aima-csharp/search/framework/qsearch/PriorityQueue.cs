@@ -1,5 +1,6 @@
 ﻿using Priority_Queue;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,5 +27,8 @@ namespace aima.core.search.framework.qsearch
 
         public void Remove(T item) => m_queue.Remove(item);
         public bool TryGetPriority(T item, out double priority) => m_queue.TryGetPriority(item, out priority);
+
+        public IEnumerator<T> GetEnumerator() => m_queue.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => m_queue.GetEnumerator();
     }
 }

@@ -7,7 +7,7 @@ namespace aima.core.search.framework.qsearch
     /// <summary>
     ///     @author Richard Waliser
     /// </summary>
-    public interface IQueue<T>
+    public interface IQueue<T> : IEnumerable<T>
     {
         /// <summary>
         ///     Returns true if the item is in the queue; otherwise false;

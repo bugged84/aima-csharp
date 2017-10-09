@@ -42,7 +42,7 @@ namespace aima.core.search.framework.qsearch
     {
         public const System.String METRIC_CLOSED_LIST = "3_closedList";
 
-	private HashSet<object> explored = new HashSet<object>();
+	protected HashSet<object> explored = new HashSet<object>();
 
 	public GraphSearch() : this(new NodeExpander())
 	{

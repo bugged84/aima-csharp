@@ -78,7 +78,10 @@
     <Compile Include="agent\State.cs" />
     <Compile Include="search\framework\qsearch\BeamSearch.cs" />
     <Compile Include="search\framework\qsearch\BranchAndBoundSearch.cs" />
+    <Compile Include="search\framework\qsearch\AAStar.cs" />
+    <Compile Include="search\framework\qsearch\IDAStar.cs" />
     <Compile Include="search\framework\qsearch\DepthFirstSearch.cs" />
+    <Compile Include="search\framework\qsearch\IterativeDeepeningSearch.cs" />
     <Compile Include="search\framework\qsearch\PriorityQueue.cs" />
     <Compile Include="search\framework\qsearch\DepthLimitedSearch.cs" />
     <Compile Include="environment\cellworld\Cell.cs" />

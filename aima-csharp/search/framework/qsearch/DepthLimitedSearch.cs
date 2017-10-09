@@ -23,7 +23,7 @@ namespace aima.core.search.framework.qsearch
 
             public override List<Node> expand(Node node, Problem problem)
             {
-                var currentDepth = node.getPathFromRoot().Count;
+                var currentDepth = node.getPathFromRoot().Count - 1;
 
                 // don't expand if the depth limit has been reached
                 if (currentDepth < m_depthLimit)
@@ -38,11 +38,17 @@ namespace aima.core.search.framework.qsearch
             }
         }
 
+        private Action<IEnumerable<object>> m_openListTrace;
+        private Action<IEnumerable<object>> m_closedListTrace;
+
         private uint DepthLimit { get; }
 
-        public DepthLimitedSearch(uint depthLimit = DefaultDepthLimit) : base(new DepthLimitedNodeExpander(depthLimit))
+        public DepthLimitedSearch(uint depthLimit = DefaultDepthLimit, Action<IEnumerable<object>> openListTrace = null, Action<IEnumerable<object>> closedListTrace = null)
+            : base(new DepthLimitedNodeExpander(depthLimit))
         {
             DepthLimit = depthLimit;
+            m_openListTrace = openListTrace;
+            m_closedListTrace = closedListTrace;
         }
 
         public override List<Action> Search(Problem problem)
@@ -50,6 +56,14 @@ namespace aima.core.search.framework.qsearch
             var frontier = new LIFOQueue<Node>();
 
             return base.search(problem, frontier);
+        }
+
+        protected override void OnNodeExpanded()
+        {
+            base.OnNodeExpanded();
+
+            m_openListTrace?.Invoke(frontier.Select(x => x.getState()));
+            m_closedListTrace?.Invoke(explored.Select(x => x));
         }
 
         public override string ToString()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace aima.core.search.framework.qsearch
@@ -15,5 +16,8 @@ namespace aima.core.search.framework.qsearch
         public T Dequeue() => m_queue.Dequeue();
         public void Enqueue(T item) => m_queue.Enqueue(item);
         public T Peek() => m_queue.Peek();
+
+        public IEnumerator<T> GetEnumerator() => m_queue.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => m_queue.GetEnumerator();
     }
 }
